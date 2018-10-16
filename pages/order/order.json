@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "i-cell": "../../dist/cell/index",
-    "i-input": "../../dist/input/index",
-    "i-picker-date": "../../dist/picker-date/index"
-  }
-}
