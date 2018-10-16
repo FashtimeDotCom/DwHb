@@ -1,0 +1,22 @@
+/* pages/default/default.wxss */
+.home_container{
+  background-color: #eee;
+}
+
+.home-tabs{
+  font-family: 华文黑体；
+}
+
+.home_swiper .zone{
+   top:180rpx;
+   position:absolute;
+   font-size:14pt;
+   margin-left: 50rpx;
+}
+
+.home_main{
+  margin:50rpx;
+}
+.home_main i-button{
+  margin:50rpx;
+}
