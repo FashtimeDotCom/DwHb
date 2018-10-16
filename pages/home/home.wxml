@@ -1,0 +1,24 @@
+<view class="home_container">
+  <view class="home_swiper">
+    <swiper indicator-dots="true" circular="true" autoplay="true" interval="4000" duration="1000">
+      <block wx:for="{{imgUrls}}" wx:key="index">
+        <swiper-item>
+          <image src="{{item}}" class="slide-image" style="width:100%" />
+        </swiper-item>
+      </block>
+    </swiper>
+    <block >
+      <view class="home_swiper zone" bindtap="changeCity">
+        {{curCity}}
+      </view>
+    </block>
+
+
+  </view>
+  <view class="home_main">
+    <i-button bind:click="goOrder" type="success" shape="circle" size="large">预约</i-button>
+  </view>
+  <view class="home_slide">
+
+  </view>
+</view>
