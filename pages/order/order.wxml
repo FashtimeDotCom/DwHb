@@ -1,10 +1,13 @@
 <!--pages/order/order.wxml-->
 <view>
   <i-panel title="基础用法">
-    <i-picker-date title="预约时间"></i-picker-date>
+    <i-picker-date start="2018-10-17" fields="day" title="预约时间"></i-picker-date>
     <i-input value="{{ value1 }}" title="姓名" placeholder="名字" />
     <i-input value="{{ value2 }}" type="number" title="联系电话" placeholder="请输入手机号" />
     <i-input value="{{ value3 }}"  title="详细地址" placeholder="请输入详细地址(最多50字)" maxlength="50" />
     <i-input value="{{ value4 }}" title="用户信息" disabled />
+
 </i-panel>
 </view>
+
+
