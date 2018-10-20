@@ -32,12 +32,15 @@ Component({
     years: [],
     endYear: 2119,
     startYear: 2018,
+    curYear: 2018,
     months: [],
     endMonth: 12,
     startMonth: 1,
+    curMonth: 1,
     days: [],
     endDay: 31,
     startDay: 1,
+    curDay: 1,
     yearsShowPos: [0],
     monthsShowPos: [2],
     daysShowPos: [5],
@@ -51,139 +54,37 @@ Component({
     /**
      * 初始化年月日
      */
-    var date = new Date();
-    var years = [];
-    var months = [];
-    var days = [];
-    var start = this.data.start;
-
-    if (start === null || start === "") {
-      let now = this.data.now;
-      start = now;
-      this.setData({
-        start: now
-      })
-    }
-    let startArray = start.split('-');
-    let endArray = this.data.end.split('-');
-    let nowArray = this.data.now.split('-');
-    let startYear, startMonth = 1,
-      startDay = 1,
-      endYear, endMonth = 12,
-      endDay = 31,
-      nowYear, nowMonth, nowDay;
-
-    if (this.data.fields === 'day') {
-      startYear = startArray[0];
-      startMonth = startArray[1];
-      startDay = startArray[2];
-      nowYear = nowArray[0];
-      nowMonth = nowArray[1];
-      nowDay = nowArray[2];
-    } else if (this.data.fields === 'month') {
-      startYear = startArray[0];
-      startMonth = startArray[1];
-      nowYear = nowArray[0];
-      nowMonth = nowArray[1];
-      this.setData({
-        daysVisible: false
-      })
-    } else if (this.data.fields === "year") {
-      startYear = startArray[0];
-      nowYear = nowArray[0];
-      this.setData({
-        daysVisible: false,
-        monthsVisible: false
-      })
-    } else {
-      this.setData({
-        daysVisible: false,
-        monthsVisible: false,
-        yearsVisible: false
-      })
-    }
-    if (endArray.length === 3) {
-      endYear = endArray[0];
-      endMonth = endArray[1];
-      endDay = endArray[2];
-    } else {
-      endYear = parseInt(startYear) + 50;
-    }
-
-    for (let i = startYear; i <= endYear; i++) {
-      years.push(i)
-    }
-
-    months = this._getMonths(startYear, endYear, nowYear, startMonth, endMonth);
-
-    days = this._getDays(startYear, endYear, nowYear, startMonth, endMonth, nowMonth, startDay, endDay);
-
-    this.setData({
-      years: years,
-      startYear: startYear,
-      endYear: endYear,
-      months: months,
-      startMonth: startMonth,
-      endMonth: endMonth,
-      days: days,
-      endDay: endDay,
-      startDay: startDay
-    })
+    this._initComponent();
   },
   ready: function() {
-    let nowArray = this.data.now.split('-');
-    let startArray = this.data.start.split('-');
 
-    if (this.data.fields === 'day') {
-
-      this.setData({
-        yearsShowPos: [parseInt(nowArray[0]) - parseInt(startArray[0])],
-        monthsShowPos: [parseInt(nowArray[1]) - 1],
-        daysShowPos: [parseInt(nowArray[2] - 1)]
-      })
-    } else if (this.data.fields === 'month') {
-
-      this.setData({
-        yearsShowPos: [parseInt(nowArray[0]) - parseInt(startArray[0])],
-        monthsShowPos: [parseInt(nowArray[1]) - 1]
-      })
-    } else if (this.data.fields === 'year') {
-
-      this.setData({
-        yearsShowPos: [parseInt(nowArray[0]) - parseInt(startArray[0])]
-      })
-    }
+    //this._initShowPos();
 
   },
   methods: {
 
-    handleInputChange(event) {
-      const {
-        detail = {}
-      } = event;
-      const {
-        value = ''
-      } = detail;
-      this.setData({
-        value
-      });
-
-      this.triggerEvent('change', event);
-    },
     handleAction() {
       this.setData({
         visible: true
       })
     },
 
-    handleSure() {
+    handleSure(e) {
 
       let curYear = this.data.years[this.data.yearsShowPos];
       let curMonth = this.data.months[this.data.monthsShowPos];
       let curDay = this.data.days[this.data.daysShowPos];
+      let value = [curYear, curMonth, curDay];
       this.setData({
-        visible: false
+        visible: false,
+        curYear: curYear,
+        curMonth: curMonth,
+        curDay: curDay
       })
+
+      this.triggerEvent('sureclick', {
+        value: value
+      });
     },
     handleCancel() {
       this._initComponent();
@@ -212,7 +113,7 @@ Component({
 
       for (let i = daysStart; i <= daysNum; i++) {
         let day = 0;
-        day = i < 10 ? '0' + i : i;
+        day = i < 10 ? '0' + i : '' + i;
         days.push(day)
       }
 
@@ -233,7 +134,7 @@ Component({
 
       for (let i = monthStart; i <= monthNum; i++) {
         let month = 0;
-        month = i < 10 ? '0' + i : i;
+        month = i < 10 ? '0' + i : '' + i;
         months.push(month)
       }
 
@@ -312,14 +213,18 @@ Component({
       } else if (this.data.fields === 'month') {
         startYear = startArray[0];
         startMonth = startArray[1];
+        
         nowYear = nowArray[0];
         nowMonth = nowArray[1];
+        nowDay=1;
         this.setData({
           daysVisible: false
         })
       } else if (this.data.fields === "year") {
         startYear = startArray[0];
         nowYear = nowArray[0];
+        nowMonth=1;
+        nowDay=1;
         this.setData({
           daysVisible: false,
           monthsVisible: false
@@ -347,40 +252,48 @@ Component({
 
       days = this._getDays(startYear, endYear, nowYear, startMonth, endMonth, nowMonth, startDay, endDay);
 
+
+
       this.setData({
         years: years,
         startYear: startYear,
         endYear: endYear,
+        curYear: nowYear,
         months: months,
         startMonth: startMonth,
         endMonth: endMonth,
+        curMonth: nowMonth,
         days: days,
+        startDay: startDay,
         endDay: endDay,
-        startDay: startDay
+        curDay: nowDay
       })
       this._initShowPos();
     },
     _initShowPos: function() {
       let nowArray = this.data.now.split('-');
       let startArray = this.data.start.split('-');
-
+      let yearPos = parseInt(nowArray[0]) - parseInt(startArray[0]);
+      let monthPos = this.data.months.indexOf(nowArray[1]);
+      let dayPos = this.data.days.indexOf(nowArray[2]);
+      
       if (this.data.fields === 'day') {
 
         this.setData({
-          yearsShowPos: [parseInt(nowArray[0]) - parseInt(startArray[0])],
-          monthsShowPos: [parseInt(nowArray[1]) - 1],
-          daysShowPos: [parseInt(nowArray[2] - 1)]
+          yearsShowPos: [yearPos],
+          monthsShowPos: [monthPos],
+          daysShowPos: [dayPos]
         })
       } else if (this.data.fields === 'month') {
 
         this.setData({
-          yearsShowPos: [parseInt(nowArray[0]) - parseInt(startArray[0])],
-          monthsShowPos: [parseInt(nowArray[1]) - 1]
+          yearsShowPos: [yearPos],
+          monthsShowPos: [monthPos]
         })
       } else if (this.data.fields === 'year') {
 
         this.setData({
-          yearsShowPos: [parseInt(nowArray[0]) - parseInt(startArray[0])]
+          yearsShowPos: [yearPos]
         })
       }
     }

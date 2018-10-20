@@ -1,7 +1,11 @@
 <!--dist/picker-date/index.wxml-->
 <view class="i-class i-cell i-pickerdate ">
   <view wx:if="{{ title }}" class="i-cell-hd i-pickerdate-title">{{ title }}</view>
-  <view class="i-pickerdate-pickerdate i-cell-bd" bindtap="handleAction">{{year}}年{{month}}月{{day}}日</view>
+  <view class="i-pickerdate-pickerdate i-cell-bd" bindtap="handleAction">
+    <view>{{curYear}}年</view>
+    <view class="{{monthsVisible?'':'i-as-hide'}}">{{curMonth}}月</view>
+    <view class="{{daysVisible?'':'i-as-hide'}}">{{curDay}}日</view>
+  </view>
 </view>
 
 <i-action-sheet visible="{{ visible }}">
@@ -14,17 +18,17 @@
     <label>选择日期</label>
     <view class="date-picker-content-center">
       
-      <picker-view indicator-style="height: 70rpx;" class="date-picker-content-item" value="{{yearsShowPos}}" bindchange="yearChange">
+      <picker-view indicator-style="height: 70rpx;" class="date-picker-content-item-{{fields}}" value="{{yearsShowPos}}" bindchange="yearChange">
         <picker-view-column>
           <view wx:for="{{years}}" class="date-picker-content-item-column-item" wx:key="*this">{{item}}年</view>
         </picker-view-column>
       </picker-view>
-      <picker-view indicator-style="height: 70rpx;" class="date-picker-content-item {{monthsVisible?'':'i-as-hide'}}" value="{{monthsShowPos}}" bindchange="monthChange">
+      <picker-view indicator-style="height: 70rpx;" class="date-picker-content-item-{{fields}} {{monthsVisible?'':'i-as-hide'}}" value="{{monthsShowPos}}" bindchange="monthChange">
         <picker-view-column>
           <view wx:for="{{months}}" class="date-picker-content-item-column-item" wx:key="*this">{{item}}月</view>
         </picker-view-column>
       </picker-view>
-      <picker-view indicator-style="height: 70rpx;" class="date-picker-content-item {{daysVisible?'':'i-as-hide'}}" value="{{daysShowPos}}"  bindchange="dayChange">
+      <picker-view indicator-style="height: 70rpx;" class="date-picker-content-item-{{fields}} {{daysVisible?'':'i-as-hide'}}" value="{{daysShowPos}}"  bindchange="dayChange">
         <picker-view-column>
           <view wx:for="{{days}}" class="date-picker-content-item-column-item" wx:key="*this">{{item}}日</view>
         </picker-view-column>

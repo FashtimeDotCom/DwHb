@@ -6,20 +6,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-    years: ['2018', '2019', '2010'],
-    year: '',
-    months: '',
-    month: 2,
-    days: '',
-    day: 2,
-    
+    curDate: new Date().toLocaleDateString().replace(new RegExp('/', 'g'), "-")
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-   
+
+
   },
 
   /**
@@ -72,12 +68,13 @@ Page({
   },
   bindChange: function(e) {
     const val = e.detail.value
-    
+
   },
-  bindDateChange: function(e) {
-    console.log(e)
+  onGetPickerDate: function(e) {
+    let val = e.detail.value;
+    let curDate = val[0] + '-' + val[1] + '-' + val[2];
     this.setData({
-      dates: e.detail.value
+      curDate: curDate
     })
   }
 })
