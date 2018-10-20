@@ -5,31 +5,33 @@
 </view>
 
 <i-action-sheet visible="{{ visible }}">
-   <view slot="header" style="padding: 16px">
-        <view style="color: #444;font-size: 16px;margin-right:-310px;" bindtap="handleCancel">确定</view>
-        <label>选择日期</label>
-        <view class="date-picker-content-center">
-          <picker-view indicator-style="height: 70rpx;" class="date-picker-content-item" value="{{yearsShowPos}}" bindchange="yearChange">
-          <picker-view-column>
-            <view wx:for="{{years}}" class="date-picker-content-item-column-item" wx:key="*this">{{item}}年</view>
-          </picker-view-column>
-        </picker-view>
-        <picker-view indicator-style="height: 70rpx;" class="date-picker-content-item" value="{{monthsShowPos}}" bindchange="monthChange">
-          <picker-view-column>
-            <view wx:for="{{months}}" class="date-picker-content-item-column-item" wx:key="*this">{{item}}月</view>
-          </picker-view-column>
-        </picker-view>
-        <picker-view indicator-style="height: 70rpx;" class="date-picker-content-item" value="{{daysShowPos}}" bindchange="dayChange">
-          <picker-view-column>
-            <view wx:for="{{days}}" class="date-picker-content-item-column-item" wx:key="*this">{{item}}日</view>
-          </picker-view-column>
-        </picker-view>
-
-        </view>
-        
+  <view slot="header" style="padding: 16px">
+    <view style="display: flex;flex-direction: row;justify-content: space-between;color: #444;font-size: 28rpx;">
+      <view bindtap="handleCancel">取消</view>
+      <view bindtap="handleSure">确认</view>
     </view>
-    
+
+    <label>选择日期</label>
+    <view class="date-picker-content-center">
+      
+      <picker-view indicator-style="height: 70rpx;" class="date-picker-content-item" value="{{yearsShowPos}}" bindchange="yearChange">
+        <picker-view-column>
+          <view wx:for="{{years}}" class="date-picker-content-item-column-item" wx:key="*this">{{item}}年</view>
+        </picker-view-column>
+      </picker-view>
+      <picker-view indicator-style="height: 70rpx;" class="date-picker-content-item {{monthsVisible?'':'i-as-hide'}}" value="{{monthsShowPos}}" bindchange="monthChange">
+        <picker-view-column>
+          <view wx:for="{{months}}" class="date-picker-content-item-column-item" wx:key="*this">{{item}}月</view>
+        </picker-view-column>
+      </picker-view>
+      <picker-view indicator-style="height: 70rpx;" class="date-picker-content-item {{daysVisible?'':'i-as-hide'}}" value="{{daysShowPos}}"  bindchange="dayChange">
+        <picker-view-column>
+          <view wx:for="{{days}}" class="date-picker-content-item-column-item" wx:key="*this">{{item}}日</view>
+        </picker-view-column>
+      </picker-view>
+
+    </view>
+
+  </view>
+
 </i-action-sheet>
-
-
-

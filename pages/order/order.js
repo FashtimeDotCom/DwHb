@@ -12,17 +12,14 @@ Page({
     month: 2,
     days: '',
     day: 2,
-    mm:[]
+    
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.setData({
-      
-      mm: [1, 1]
-    })
+   
   },
 
   /**
